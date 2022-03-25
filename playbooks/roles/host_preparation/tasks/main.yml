@@ -1,0 +1,14 @@
+---
+# tasks file for host_preparation
+- name: Ensure the /etc/hosts is populated
+  include_tasks: setting_hostname.yml
+
+- name: Perform the registration of each host into the RH CDN
+  include_tasks: hosts_registration.yml
+
+- name: Ensure Firewalld is started and the proper rules are set
+  include_tasks: firewalld_settings.yml
+
+- name: Ensure the preflight playbook prepare the hosts
+  include_tasks: preflight.yml
+

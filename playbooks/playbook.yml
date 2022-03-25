@@ -1,0 +1,4 @@
+- name: Deployment of Ceph cluster based in cephadm
+  hosts: all
+  roles:
+    - host_preparation

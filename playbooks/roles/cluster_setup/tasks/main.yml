@@ -1,0 +1,7 @@
+---
+# tasks file for cluster_setup
+- name: Prepare the bootstrap
+  include: bootstrap.yml
+
+- name: Deploy the Ceph cluster
+  include: deploy.yml

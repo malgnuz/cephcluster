@@ -1,0 +1,5 @@
+---
+# vars file for host_preparation
+repositories:
+  - rhel-8-for-x86_64-appstream-rpms
+  - rhel-8-for-x86_64-baseos-rpms

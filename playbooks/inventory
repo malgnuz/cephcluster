@@ -1,0 +1,8 @@
+[cluster]
+#ipaddress_node01
+#ipaddress_node02 
+#ipaddress_node03 
+
+[admin]
+#ipaddress_node01
+
