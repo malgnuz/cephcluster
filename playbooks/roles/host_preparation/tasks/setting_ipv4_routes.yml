@@ -1,0 +1,21 @@
+---
+- name: Set ipv4 routes in eth1 at Node01
+  shell: nmcli con mod 'System eth1' +ipv4.routes "{{ item }}" && ifdown eth1 && ifup eth1
+  loop:
+    - '192.168.1.0/24 192.168.0.254'
+    - '192.168.2.0/24 192.168.0.254'
+  when: ansible_facts['hostname'] == 'node01'
+
+- name: Set ipv4 routes in eth1 at Node02
+  shell: nmcli con mod 'System eth1' +ipv4.routes "{{ item }}" && ifdown eth1 && ifup eth1
+  loop:
+    - '192.168.0.0/24 192.168.1.254'
+    - '192.168.2.0/24 192.168.1.254'
+  when: ansible_facts['hostname'] == 'node02'
+
+- name: Set ipv4 routes in eth1 at Node03
+  shell: nmcli con mod 'System eth1' +ipv4.routes "{{ item }}" && ifdown eth1 && ifup eth1
+  loop:
+    - '192.168.0.0/24 192.168.2.254'
+    - '192.168.1.0/24 192.168.2.254'
+  when: ansible_facts['hostname'] == 'node03'

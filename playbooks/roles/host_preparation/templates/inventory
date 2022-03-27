@@ -1,0 +1,7 @@
+{% for host in groups['cluster'] %}
+{{ hostvars[host]['ansible_facts']['hostname'] }}
+{% endfor %}
+[admin]
+{% for host in groups['admin'] %}
+{{ hostvars[host]['ansible_facts']['hostname'] }}
+{% endfor %}
