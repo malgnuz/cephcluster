@@ -15,5 +15,3 @@
 
 - name: Ensure the preflight playbook prepare the hosts
   include_tasks: preflight.yml
-  when: ansible_facts['hostname'] == 'node01'
-

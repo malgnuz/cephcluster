@@ -4,13 +4,6 @@
     state: present
     username: "{{ rhcp_username }}"
     password: "{{ rhcp_password }}"
-
-- name: Disable all repositories
-  rhsm_repository:
-    name: '*'
-    state: disabled
-        
-- name: Enable BaseOS and AppStreams repositories
-  rhsm_repository:
-    name: "{{ item }}"
-  loop: "{{ repositories }}"
+  notify:
+    - Disable repos
+    - Enable foundational repos

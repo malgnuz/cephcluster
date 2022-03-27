@@ -3,11 +3,13 @@
   rhsm_repository:
     name: "{{ item }}"
   loop: "{{ ceph_repositories }}"
+  when: ansible_facts['hostname'] == 'node01'
 
 - name: Ensure the required packages are installed
   dnf:
     name: "{{ required_rpms }}"
     state: present
+  when: ansible_facts['hostname'] == 'node01'
 
 - name: Create inventory file to be used by preflight playbook
   template:
@@ -16,3 +18,23 @@
     owner: root
     group: root
     mode: '0644'
+  when: ansible_facts['hostname'] == 'node01'
+
+- name: Generate ssh key pair
+  user:
+    name: root
+    generate_ssh_key: yes
+  when: ansible_facts['hostname'] == 'node01'
+
+- name: Get ssh public key
+  fetch:
+    src: /root/.ssh/id_rsa.pub 
+    dest: files/
+    flat: yes
+  when: ansible_facts['hostname'] == 'node01'
+
+- name: Insert public key into authorized keys
+  blockinfile:
+    path: /root/.ssh/authorized_keys
+    block: "{{ lookup('file','files/id_rsa.pub') }}"
+    insertafter: EOF

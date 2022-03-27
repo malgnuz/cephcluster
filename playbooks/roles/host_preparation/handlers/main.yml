@@ -1,2 +1,12 @@
 ---
 # handlers file for host_preparation
+- name: Disable repos
+  rhsm_repository:
+    name: '*'
+    state: disabled
+
+- name: Enable foundational repos
+  rhsm_repository:
+    name: "{{ item }}"
+  loop: "{{ repositories }}"
+
