@@ -4,6 +4,7 @@
     state: present
     username: "{{ rhcp_username }}"
     password: "{{ rhcp_password }}"
+  when: (rhcp_username is defined) and (rhcp_password is defined)
   notify:
     - Disable repos
     - Enable foundational repos

@@ -10,3 +10,5 @@
     name: "{{ item }}"
   loop: "{{ repositories }}"
 
+- name: Reboot nodes
+  reboot:

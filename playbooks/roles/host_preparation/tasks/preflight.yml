@@ -38,3 +38,15 @@
     path: /root/.ssh/authorized_keys
     block: "{{ lookup('file','files/id_rsa.pub') }}"
     insertafter: EOF
+
+- name: Execute preflight.yml playbook
+  shell: ansible-playbook -i /usr/share/cephadm-ansible/inventory /usr/share/cephadm-ansible/cephadm-preflight.yml -e "ceph_origin=rhcs" -u root -v | tee ~/ansible.log
+  when: ansible_facts['hostname'] == 'node01'
+  tags: preflight
+
+- name: Ensure versions are updated
+  dnf:
+    name: '*'
+    state: latest
+  notify:
+  - Reboot nodes
