@@ -1,0 +1,23 @@
+---
+- name: Generate the cluster's fsid
+  shell: uuidgen -r
+  register: cluster_fsid
+  run_once: True
+
+- name: Set the monitor IP
+  set_fact:
+    bootstrap_mon_ip: "{{ ansible_facts['eth1']['ipv4']['address'] }}"
+  when: ansible_facts['hostname'] == 'node01'
+
+- name: Create auth file
+  template:
+    src: templates/auth.json
+    dest: /root/registry.json
+    owner: root
+    group: root
+    mode: '0600'
+  when: ansible_facts['hostname'] == 'node01'
+
+- name: Perform the bootstrap
+  shell: cephadm bootstrap --ssh-user=root --mon-ip {{ bootstrap_mon_ip }} --allow-fqdn-hostname --fsid {{ cluster_fsid.stdout }} --registry-json /root/registry.json --skip-dashboard --skip-monitoring-stack | tee /root/bootstrap.log
+  when: ansible_facts['hostname'] == 'node01'

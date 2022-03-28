@@ -1,8 +1,11 @@
-# ansible-playbook -i inventory playbook.yml -u ${remote_user} --key-file=${private_key} -b -e rhcp_username=${rhcp_username} -e rhcp_password=${rhcp_password}
+# ansible-playbook -i inventory playbook.yml -u ${remote_user} --key-file=${private_key} -b -e rhcp_username=${rhcp_username} -e rhcp_password=${rhcp_password} -e registry_url="registry.redhat.io" -e auth_user=${auth_user} -e auth_token=${auth_token}
 # available tags: 
 # - registration
+# - preflight
+# - bootstrap
 
 - name: Deployment of Ceph cluster based in cephadm
   hosts: all
   roles:
     - host_preparation
+    - cluster_setup
