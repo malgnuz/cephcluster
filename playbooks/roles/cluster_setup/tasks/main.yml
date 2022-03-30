@@ -3,6 +3,3 @@
 - name: Prepare the bootstrap
   include: bootstrap.yml
   tags: bootstrap
-
-- name: Deploy the Ceph cluster
-  include: deploy.yml

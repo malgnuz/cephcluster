@@ -40,7 +40,7 @@
     insertafter: EOF
 
 - name: Execute preflight.yml playbook
-  shell: ansible-playbook -i /usr/share/cephadm-ansible/inventory /usr/share/cephadm-ansible/cephadm-preflight.yml -e "ceph_origin=rhcs" -u root -v | tee ~/ansible.log
+  shell: ansible-playbook -i /usr/share/cephadm-ansible/inventory /usr/share/cephadm-ansible/cephadm-preflight.yml -e "ceph_origin=rhcs" -u root -v --ssh-common-args="-o StrictHostKeyChecking=no" | tee ~/ansible.log
   when: ansible_facts['hostname'] == 'node01'
   tags: preflight
 
