@@ -12,12 +12,12 @@
 - name: Create auth file
   template:
     src: templates/auth.json
-    dest: /root/registry.json
+    dest: /root/.registry.json
     owner: root
     group: root
     mode: '0600'
   when: ansible_facts['hostname'] == 'node01'
 
-- name: Perform the bootstrap
-  shell: cephadm bootstrap --ssh-user=root --mon-ip {{ bootstrap_mon_ip }} --allow-fqdn-hostname --fsid {{ cluster_fsid.stdout }} --registry-json /root/registry.json --skip-dashboard --skip-monitoring-stack
-  when: ansible_facts['hostname'] == 'node01'
+    #- name: Perform the bootstrap
+    #shell: cephadm bootstrap --ssh-user=root --mon-ip {{ bootstrap_mon_ip }} --allow-fqdn-hostname --fsid {{ cluster_fsid.stdout }} --registry-json /root/registry.json --skip-dashboard --skip-monitoring-stack
+    #when: ansible_facts['hostname'] == 'node01'
