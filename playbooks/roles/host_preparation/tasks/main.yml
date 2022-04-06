@@ -9,10 +9,12 @@
 
 - name: Ensure the ipv4 routes are set
   include_tasks: setting_ipv4_routes.yml
+  tags: networking
 
 - name: Ensure Firewalld is started and the proper rules are set
   include_tasks: firewalld_settings.yml
-
+  tags: firewall
+  
 - name: Ensure the preflight playbook prepare the hosts
   include_tasks: preflight.yml
   tags: preflight
