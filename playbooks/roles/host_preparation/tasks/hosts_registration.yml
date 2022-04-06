@@ -8,3 +8,4 @@
   notify:
     - Disable repos
     - Enable foundational repos
+  tags: registration
