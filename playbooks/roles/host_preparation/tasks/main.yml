@@ -9,6 +9,7 @@
 
 - name: Ensure the ipv4 routes are set
   include_tasks: setting_ipv4_routes.yml
+  when: routing_required
   tags: networking
 
 - name: Ensure Firewalld is started and the proper rules are set

@@ -9,3 +9,4 @@ ceph_repositories:
 required_rpms:
   - cephadm-ansible
   - podman
+routing_required: False

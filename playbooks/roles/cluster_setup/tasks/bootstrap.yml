@@ -7,7 +7,7 @@
 - name: Set the monitor IP
   set_fact:
     bootstrap_mon_ip: "{{ ansible_facts['eth1']['ipv4']['address'] }}"
-  when: ansible_facts['hostname'] == 'node01'
+  when: ansible_facts['hostname'] == groups['cluster'][0]
 
 - name: Create auth file
   template:
@@ -16,7 +16,7 @@
     owner: root
     group: root
     mode: '0600'
-  when: ansible_facts['hostname'] == 'node01'
+  when: ansible_facts['hostname'] == groups['cluster'][0]
 
     #- name: Perform the bootstrap
     #shell: cephadm bootstrap --ssh-user=root --mon-ip {{ bootstrap_mon_ip }} --allow-fqdn-hostname --fsid {{ cluster_fsid.stdout }} --registry-json /root/registry.json --skip-dashboard --skip-monitoring-stack

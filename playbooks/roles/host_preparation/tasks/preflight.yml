@@ -3,13 +3,13 @@
   rhsm_repository:
     name: "{{ item }}"
   loop: "{{ ceph_repositories }}"
-  when: ansible_facts['hostname'] == 'node01'
+  when: ansible_facts['hostname'] == groups['cluster'][0]
 
 - name: Ensure the required packages are installed
   dnf:
     name: "{{ required_rpms }}"
     state: present
-  when: ansible_facts['hostname'] == 'node01'
+  when: ansible_facts['hostname'] == groups['cluster'][0]
 
 - name: Create inventory file to be used by preflight playbook
   template:
@@ -18,20 +18,20 @@
     owner: root
     group: root
     mode: '0644'
-  when: ansible_facts['hostname'] == 'node01'
+  when: ansible_facts['hostname'] == groups['cluster'][0]
 
 - name: Generate ssh key pair
   user:
     name: root
     generate_ssh_key: yes
-  when: ansible_facts['hostname'] == 'node01'
+  when: ansible_facts['hostname'] == groups['cluster'][0]
 
 - name: Get ssh public key
   fetch:
     src: /root/.ssh/id_rsa.pub 
     dest: files/
     flat: yes
-  when: ansible_facts['hostname'] == 'node01'
+  when: ansible_facts['hostname'] == groups['cluster'][0]
 
 - name: Insert public key into authorized keys
   blockinfile:
@@ -41,7 +41,7 @@
 
 - name: Execute preflight.yml playbook
   shell: ansible-playbook -i /usr/share/cephadm-ansible/inventory /usr/share/cephadm-ansible/cephadm-preflight.yml -e "ceph_origin=rhcs" -u root -v --ssh-common-args="-o StrictHostKeyChecking=no" | tee ~/ansible.log
-  when: ansible_facts['hostname'] == 'node01'
+  when: ansible_facts['hostname'] == groups['cluster'][0]
   tags: preflight
 
 - name: Ensure versions are updated
